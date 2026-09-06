@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 
+const LOGO_SRC = `${import.meta.env.BASE_URL}logo.svg`;
+
 export function LogoMark({ size = 48, animate = false }: { size?: number; animate?: boolean }) {
   const q = {
     hidden: { scale: 0, opacity: 0 },
@@ -86,7 +88,7 @@ export function LogoFull({ light = true }: { light?: boolean }) {
   return (
     <div className="flex min-w-0 items-center gap-2.5 md:gap-3.5">
       <img
-        src="/logo.svg"
+        src={LOGO_SRC}
         alt="AKMEKANİK"
         className="h-10 w-auto shrink-0 object-contain md:h-12"
         style={{ filter: light ? "brightness(0) invert(1)" : "none" }}
@@ -105,6 +107,6 @@ export function LogoFull({ light = true }: { light?: boolean }) {
 
 export function LogoImage() {
   return (
-    <img src="/logo.svg" alt="AKMEKANİK" className="h-12 w-auto object-contain md:h-14" />
+    <img src={LOGO_SRC} alt="AKMEKANİK" className="h-12 w-auto object-contain md:h-14" />
   );
 }
