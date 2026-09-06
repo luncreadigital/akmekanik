@@ -2,25 +2,16 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
 import { Magnetic } from "./ui";
-
-const services = [
-  "SIHHİ TESİSAT",
-  "DOĞALGAZ TESİSATI",
-  "KLİMA TESİSATI",
-  "YANGIN TESİSATI",
-  "HAVALANDIRMA TESİSATI",
-  "ISITMA TESİSATI",
-  "İNŞAAT TAAHHÜT İŞLERİ",
-];
+import type { SiteContent } from "../content";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function Hero() {
+export function Hero({ content }: { content: SiteContent }) {
+  const services = content.company.servicesMarquee;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const opacity = useTransform(scrollYProgress, [0, 0.82], [1, 0]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
 
   return (
     <section
@@ -66,7 +57,7 @@ export function Hero() {
             </motion.div>
 
             <h1 className="text-[13vw] font-bold leading-[0.9] tracking-tight text-ink sm:text-7xl lg:text-[6.8rem]">
-              {["Mekanik", "Altyapıda", "Güvenilir İmza."].map((line, i) => (
+              {content.hero.title.map((line, i) => (
                 <span key={line} className="block overflow-hidden pb-2">
                   <motion.span
                     className={`block ${i === 2 ? "gradient-text" : ""}`}
@@ -86,8 +77,7 @@ export function Hero() {
               transition={{ delay: 3.1, duration: 0.8, ease }}
               className="mt-8 max-w-2xl text-base font-light leading-relaxed text-ink/65 md:text-lg"
             >
-              Sıhhi tesisat, doğalgaz, klima, yangın, havalandırma ve ısıtma sistemlerinde; projelendirmeden saha
-              uygulamasına, bakım süreçlerinden inşaat taahhüt işlerine kadar yüksek standartta çözüm sunuyoruz.
+              {content.hero.subtitle}
             </motion.p>
 
             <motion.div
@@ -96,11 +86,7 @@ export function Hero() {
               transition={{ delay: 3.25, duration: 0.8, ease }}
               className="mt-8 flex flex-wrap gap-3"
             >
-              {[
-                "Esenyurt / İstanbul",
-                "Vergi No: 0320284587",
-                "Ticaret Sicil: 897265-0",
-              ].map((item, i) => (
+              {content.company.heroChips.map((item, i) => (
                 <span
                   key={item}
                   className={`rounded-full border px-4 py-2 text-xs font-medium tracking-[0.18em] ${
@@ -125,7 +111,7 @@ export function Hero() {
                   href="#hizmetler"
                   className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-fire to-fire-dark px-7 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-18px_rgba(240,78,35,0.7)] transition hover:shadow-[0_24px_60px_-18px_rgba(240,78,35,0.9)]"
                 >
-                  Hizmetlerimizi Keşfedin
+                  {content.hero.ctaPrimary}
                   <ArrowUpRight size={18} className="transition group-hover:rotate-45" />
                 </a>
               </Magnetic>
@@ -134,7 +120,7 @@ export function Hero() {
                   href="#iletisim"
                   className="flex items-center gap-3 rounded-full border border-black/[0.12] bg-white/70 px-7 py-4 text-sm font-semibold text-ink transition hover:border-water hover:bg-white"
                 >
-                  Bize Ulaşın
+                  {content.hero.ctaSecondary}
                 </a>
               </Magnetic>
             </motion.div>
@@ -151,9 +137,9 @@ export function Hero() {
             <motion.span animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
               <ArrowDown size={14} />
             </motion.span>
-            Kaydır
+            {content.hero.scrollLabel}
           </span>
-          <span className="hidden sm:block">Isıtma • Soğutma • Tesisat • İnşaat</span>
+          <span className="hidden sm:block">{content.hero.bottomLine}</span>
         </motion.div>
       </motion.div>
 

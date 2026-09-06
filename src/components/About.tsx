@@ -3,24 +3,13 @@ import { useRef } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Counter, Label, Reveal, SplitText } from "./ui";
 import { LogoMark } from "./Logo";
+import type { SiteContent } from "../content";
 
-const stats = [
-  { v: 15, s: "+", l: "Yıllık Tecrübe" },
-  { v: 250, s: "+", l: "Tamamlanan Proje" },
-  { v: 40, s: "+", l: "Uzman Ekip" },
-  { v: 100, s: "%", l: "Müşteri Memnuniyeti" },
-];
-
-const points = [
-  "Yönetmeliklere tam uyumlu, sertifikalı uygulama",
-  "Projelendirmeden devreye almaya tek muhatap",
-  "Zamanında teslim ve şeffaf maliyet planlaması",
-  "Satış sonrası bakım ve teknik destek",
-];
-
-const tags = ["Sıhhi Tesisat", "Doğalgaz", "Klima", "Yangın", "Havalandırma", "Isıtma"];
-
-export function About() {
+export function About({ content }: { content: SiteContent }) {
+  const stats = content.about.stats;
+  const points = content.about.points;
+  const tags = content.about.tags;
+  const { about, company } = content;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x1 = useTransform(scrollYProgress, [0, 1], [-200, 200]);
@@ -49,21 +38,21 @@ export function About() {
                         <LogoMark size={82} />
                       </div>
                       <div>
-                        <div className="text-xs uppercase tracking-[0.35em] text-white/35">Kurumsal Kimlik</div>
+                        <div className="text-xs uppercase tracking-[0.35em] text-white/35">{about.cardCorporateLabel}</div>
                         <div className="mt-2 max-w-[15rem] text-lg font-semibold leading-snug text-white/88">
-                          AKMEKANİK İnşaat Sanayi ve Ticaret Limited Şirketi
+                          {about.cardCompanyText}
                         </div>
                       </div>
                     </div>
 
                     <div className="rounded-2xl border border-white/10 bg-black/10 px-4 py-3 text-right backdrop-blur">
-                      <div className="text-[10px] uppercase tracking-[0.3em] text-white/35">Merkez</div>
-                      <div className="mt-1 text-sm font-medium text-white/80">Esenyurt, İstanbul</div>
+                      <div className="text-[10px] uppercase tracking-[0.3em] text-white/35">{about.cardCenterLabel}</div>
+                      <div className="mt-1 text-sm font-medium text-white/80">{company.city}</div>
                     </div>
                   </div>
 
                   <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/10 p-5 backdrop-blur">
-                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/35">Uzmanlık Alanları</div>
+                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/35">{about.cardSpecialtiesLabel}</div>
                     <div className="mt-4 flex flex-wrap gap-2.5">
                       {tags.map((tag, i) => (
                         <span
@@ -80,23 +69,17 @@ export function About() {
                 </div>
 
                 <div>
-                  <div className="text-xs uppercase tracking-[0.3em] text-white/40">Kurumsal</div>
+                  <div className="text-xs uppercase tracking-[0.3em] text-white/40">{about.cardBottomLabel}</div>
                   <div className="mt-3 text-3xl font-bold leading-tight">
-                    Isının, suyun ve havanın <span className="gradient-text">mühendisliği.</span>
+                    {about.cardMotto} <span className="gradient-text">{about.cardMottoAccent}</span>
                   </div>
                   <div className="mt-6 grid grid-cols-1 gap-3 text-[11px] text-white/50 sm:grid-cols-3">
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                      <div className="text-white/30">Vergi No</div>
-                      <div className="mt-1 font-medium text-white/80">0320284587</div>
-                    </div>
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                      <div className="text-white/30">Ticaret Sicil</div>
-                      <div className="mt-1 font-medium text-white/80">897265-0</div>
-                    </div>
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                      <div className="text-white/30">Mersis No</div>
-                      <div className="mt-1 font-medium text-white/80">0032-0284-5870-0010</div>
-                    </div>
+                    {about.board.map((b) => (
+                      <div key={b.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+                        <div className="text-white/30">{b.label}</div>
+                        <div className="mt-1 font-medium text-white/80">{b.value}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -108,32 +91,28 @@ export function About() {
               className="absolute -right-4 top-10 rounded-2xl border border-white/10 bg-ink/85 px-5 py-4 backdrop-blur-xl md:-right-10"
             >
               <div className="text-3xl font-bold gradient-text">
-                <Counter to={15} suffix="+" />
+                <Counter to={about.yearsBadge.value} suffix={about.yearsBadge.suffix} />
               </div>
-              <div className="text-xs text-white/50">yıllık saha tecrübesi</div>
+              <div className="text-xs text-white/50">{about.yearsBadge.label}</div>
             </motion.div>
           </motion.div>
 
           <div>
             <Reveal>
-              <Label>Hakkımızda</Label>
+              <Label>{about.label}</Label>
             </Reveal>
             <div className="relative overflow-hidden rounded-[2rem] mb-8 border border-white/10">
-              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop" alt="Mechanic" className="w-full h-72 object-cover opacity-60" />
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop" alt={about.imageAlt} className="w-full h-72 object-cover opacity-60" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0b1a23] via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 text-xs uppercase tracking-[0.25em] text-white/50">Hakkımızda</div>
+              <div className="absolute bottom-6 left-6 text-xs uppercase tracking-[0.25em] text-white/50">{about.imageCreditLabel}</div>
             </div>
             <h2 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">
-              <SplitText text="Güvenilir mühendislik," />
+              <SplitText text={about.titlePrimary} />
               <br />
-              <SplitText text="kusursuz uygulama." className="text-white/40" delay={0.2} />
+              <SplitText text={about.titleSecondary} className="text-white/40" delay={0.2} />
             </h2>
             <Reveal delay={0.2}>
-              <p className="mt-8 leading-relaxed text-white/60">
-                AKMEKANİK İnşaat Sanayi ve Ticaret Limited Şirketi, İstanbul Esenyurt merkezli olarak konut, ticari
-                ve endüstriyel yapılarda mekanik tesisat ve inşaat taahhüt hizmetleri sunmaktadır. Uzman kadromuz
-                ve güncel teknolojiyle, her projeye ilk günkü özenle yaklaşıyoruz.
-              </p>
+              <p className="mt-8 leading-relaxed text-white/60">{about.intro}</p>
             </Reveal>
             <ul className="mt-8 space-y-4">
               {points.map((p, i) => (
@@ -151,7 +130,7 @@ export function About() {
         <div className="mt-32 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 lg:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div
-              key={s.l}
+              key={s.label}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -159,10 +138,10 @@ export function About() {
               className="group bg-ink p-8 transition-colors duration-500 hover:bg-white/[0.04] md:p-12"
             >
               <div className="text-4xl font-bold md:text-6xl">
-                <Counter to={s.v} suffix={s.s} />
+                <Counter to={s.value} suffix={s.suffix} />
               </div>
               <div className="mt-3 text-xs uppercase tracking-[0.25em] text-white/40 transition group-hover:text-white/70">
-                {s.l}
+                {s.label}
               </div>
             </motion.div>
           ))}

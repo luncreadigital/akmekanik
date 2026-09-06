@@ -1,10 +1,9 @@
-import { ArrowUp } from "lucide-react";
-import { Magnetic } from "./ui";
+import type { SiteContent } from "../content";
 
-const WHATSAPP_NUMBER = "905428002025";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
-
-export function Footer() {
+export function Footer({ content }: { content: SiteContent }) {
+  const company = content.company;
+  const footer = content.footer;
+  const WHATSAPP_URL = `https://wa.me/${company.whatsapp}`;
   const whatsappIcon = (
     <svg viewBox="0 0 32 32" width="24" height="24" fill="none" aria-hidden="true">
       <path
@@ -30,49 +29,44 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <div>
-              <div className="text-lg font-extrabold tracking-[0.2em]">AKMEKANİK</div>
-              <div className="text-[9px] tracking-widest text-white/50">İnşaat San. ve Tic. Ltd. Şti.</div>
+              <div className="text-lg font-extrabold tracking-[0.2em]">{company.name}</div>
+              <div className="text-[9px] tracking-widest text-white/50">{company.shortLegal}</div>
             </div>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/50">
-              AKMEKANİK İnşaat Sanayi ve Ticaret Limited Şirketi. Mekanik tesisat ve inşaat taahhüt işlerinde
-              güvenilir çözüm ortağınız.
-            </p>
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/50">{footer.description}</p>
           </div>
           <div className="md:col-span-3">
-            <div className="mb-5 text-xs uppercase tracking-[0.25em] text-white/40">Hizmetler</div>
+            <div className="mb-5 text-xs uppercase tracking-[0.25em] text-white/40">{footer.servicesTitle}</div>
             <ul className="space-y-2.5 text-sm text-white/70">
-              {["Sıhhi Tesisat", "Doğalgaz Tesisatı", "Klima Tesisatı", "Yangın Tesisatı", "Havalandırma", "Isıtma Tesisatı", "İnşaat Taahhüt"].map(
-                (s) => (
-                  <li key={s}>
-                    <a href="#hizmetler" className="transition hover:text-fire">
-                      {s}
-                    </a>
-                  </li>
-                ),
-              )}
+              {footer.services.map((s) => (
+                <li key={s}>
+                  <a href="#hizmetler" className="transition hover:text-fire">
+                    {s}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="md:col-span-4">
-            <div className="mb-5 text-xs uppercase tracking-[0.25em] text-white/40">Kurumsal</div>
+            <div className="mb-5 text-xs uppercase tracking-[0.25em] text-white/40">{footer.corporateTitle}</div>
             <ul className="space-y-2.5 text-sm text-white/70">
-              <li>Zafer Mah. Adile Naşit Blv. No:30-32 G Dükkan 324</li>
-              <li>Esenyurt, İstanbul – Türkiye</li>
-              <li className="pt-3 text-white/45">Vergi No: 0320284587 (Avcılar)</li>
-              <li className="text-white/45">Ticaret Sicil No: 897265-0</li>
-              <li className="text-white/45">Mersis No: 0032-0284-5870-0010</li>
+              <li>{company.address}</li>
+              <li>{company.city}</li>
+              <li className="pt-3 text-white/45">Vergi No: {company.taxFull}</li>
+              <li className="text-white/45">Ticaret Sicil No: {company.tradeRegistry}</li>
+              <li className="text-white/45">Mersis No: {company.mersis}</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/10 py-8 md:flex-row">
           <div className="text-xs text-white/40">
-            © {new Date().getFullYear()} AKMEKANİK İnşaat San. ve Tic. Ltd. Şti. Tüm hakları saklıdır.
+            © {new Date().getFullYear()} {company.name} {company.shortLegal}. {footer.rightsPrefix}
           </div>
         </div>
       </div>
       <div className="overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 text-center text-[16vw] font-extrabold leading-[0.8] text-white/[0.03] select-none">
-          AKMEKANİK
+          {company.name}
         </div>
       </div>
     </footer>

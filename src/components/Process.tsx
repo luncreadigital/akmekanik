@@ -1,15 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Label, Reveal, SplitText } from "./ui";
+import type { SiteContent } from "../content";
 
-const steps = [
-  { n: "01", t: "Keşif & Analiz", d: "Sahada detaylı keşif yapar, ihtiyaçları ve mevcut altyapıyı analiz ederiz." },
-  { n: "02", t: "Projelendirme", d: "Yönetmeliklere uygun mekanik proje ve maliyet planı hazırlarız." },
-  { n: "03", t: "Uygulama", d: "Uzman ekiplerimizle montaj ve inşaat işlerini zamanında gerçekleştiririz." },
-  { n: "04", t: "Test & Teslim", d: "Sistemleri test eder, devreye alır ve garantili olarak teslim ederiz." },
-];
-
-export function Process() {
+export function Process({ content }: { content: SiteContent }) {
+  const steps = content.process.steps;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
   const h = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
@@ -19,12 +14,12 @@ export function Process() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-20 text-center">
           <Reveal className="flex justify-center">
-            <Label>Çalışma Sürecimiz</Label>
+            <Label>{content.process.label}</Label>
           </Reveal>
           <h2 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
-            <SplitText text="Keşiften teslimata" />
+            <SplitText text={content.process.titlePrimary} />
             <br />
-            <SplitText text="dört adımda." className="text-white/40" delay={0.15} />
+            <SplitText text={content.process.titleSecondary} className="text-white/40" delay={0.15} />
           </h2>
         </div>
 

@@ -1,18 +1,16 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 import { FileDown, Menu, X } from "lucide-react";
-import { LogoImage } from "./Logo";
+import { LogoFull, LogoImage } from "./Logo";
 import { Magnetic } from "./ui";
+import type { SiteContent } from "../content";
 
-const links = [
-  { label: "Anasayfa", href: "#hero" },
-  { label: "Hizmetler", href: "#hizmetler" },
-  { label: "Hakkımızda", href: "#hakkimizda" },
-  { label: "Süreç", href: "#surec" },
-  { label: "İletişim", href: "#iletisim" },
-];
+function Links({ content }: { content: SiteContent }) {
+  return content.navigation.links;
+}
 
-export function Navbar() {
+export function Navbar({ content }: { content: SiteContent }) {
+  const links = Links({ content });
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -60,7 +58,7 @@ export function Navbar() {
                   rel="noreferrer"
                   className="flex items-center gap-2 rounded-full bg-gradient-to-r from-fire to-fire-dark px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
                 >
-                  <FileDown size={15} /> Katalog İndir
+                  <FileDown size={15} /> {content.navigation.catalogLabel}
                 </a>
               </Magnetic>
             </div>
@@ -107,7 +105,7 @@ export function Navbar() {
 
             <div className="mt-auto rounded-3xl border border-black/[0.08] bg-white p-5 shadow-[0_20px_50px_-30px_rgba(11,15,23,0.35)]">
               <div className="text-xs uppercase tracking-[0.25em] text-ink/40">Merkez</div>
-              <div className="mt-2 text-sm font-medium text-ink/80">Esenyurt, İstanbul – Türkiye</div>
+              <div className="mt-2 text-sm font-medium text-ink/80">{content.company.city}</div>
             </div>
           </motion.div>
         )}
