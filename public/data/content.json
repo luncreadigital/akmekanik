@@ -1,9 +1,11 @@
 {
   "company": {
-    "name": "AKMEKANİK 2",
+    "name": "AKMEKANİK",
     "legalName": "AKMEKANİK İnşaat Sanayi ve Ticaret Limited Şirketi",
     "shortLegal": "İnşaat San. ve Tic. Ltd. Şti.",
     "description": "AKMEKANİK İnşaat Sanayi ve Ticaret Limited Şirketi. Mekanik tesisat ve inşaat taahhüt işlerinde güvenilir çözüm ortağınız.",
+    "motto": "Isının, suyun ve havanın",
+    "mottoAccent": "mühendisliği.",
     "city": "Esenyurt, İstanbul – Türkiye",
     "address": "Zafer Mah. Adile Naşit Blv. No:30-32 G Dükkan 324, Esenyurt, İstanbul – Türkiye",
     "mapQuery": "Zafer+Mahallesi+Adile+Naşit+Bulvarı+No:30-32+Esenyurt+İstanbul",
@@ -25,16 +27,14 @@
       "HAVALANDIRMA TESİSATI",
       "ISITMA TESİSATI",
       "İNŞAAT TAAHHÜT İŞLERİ"
-    ],
-    "motto": "Isının, suyun ve havanın",
-    "mottoAccent": "mühendisliği."
+    ]
   },
   "hero": {
     "kicker": "AKMEKANİK İNŞAAT SANAYİ VE TİCARET LTD. ŞTİ.",
     "title": [
       "Mekanik",
       "Altyapıda",
-      "Güvenilir İmza. d"
+      "Güvenilir İmza."
     ],
     "subtitle": "Sıhhi tesisat, doğalgaz, klima, yangın, havalandırma ve ısıtma sistemlerinde; projelendirmeden saha uygulamasına, bakım süreçlerinden inşaat taahhüt işlerine kadar yüksek standartta çözüm sunuyoruz.",
     "ctaPrimary": "Hizmetlerimizi Keşfedin",
