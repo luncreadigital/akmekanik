@@ -29,7 +29,7 @@ type AdminProps = {
   onLeave: () => void;
 };
 
-const SAVE_URL = "/api/content";
+const SAVE_URL = `${import.meta.env.BASE_URL}api/content`;
 const SOURCE_LABEL = "public/data/content.json";
 
 const SECTIONS: { key: keyof SiteContent; title: string }[] = [

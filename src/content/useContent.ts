@@ -13,8 +13,15 @@ export type FetchState<T> = {
   error: string | null;
 };
 
-const REMOTE_URL = import.meta.env.VITE_CONTENT_URL as string | undefined;
+// Canlı içerik: GitHub main'deki güncel dosya. Vercel deploy'a bağımlı olmadığı için
+// admin kaydı → GitHub commit → bir sonraki yükleme anında siteye yansır.
+const CONTENT_URL =
+  "https://raw.githubusercontent.com/luncreadigital/akmekanik/main/public/data/content.json";
+const REMOTE_URL = (import.meta.env.VITE_CONTENT_URL as string | undefined) || CONTENT_URL;
+// Raw CDN cache'ini geçersiz kılar; her yüklemede en taze commit getirilir.
+const LIVE = `${REMOTE_URL}?v=${Date.now()}`;
 // base = "/akmekanik/" → BASE_URL + "data/content.json" = "/akmekanik/data/content.json"
+// Deploy içine kopyalanan statik yedek; canlı kaynak düşerse fallback olarak kullanılır.
 const DATA_URL = `${import.meta.env.BASE_URL}data/content.json`;
 
 function normalizeRemote(raw: unknown): unknown {
@@ -30,7 +37,7 @@ export function useContent() {
 
   useEffect(() => {
     let alive = true;
-    const candidates = REMOTE_URL ? [REMOTE_URL, DATA_URL] : [DATA_URL];
+    const candidates = [LIVE, DATA_URL];
 
     (async () => {
       for (const url of candidates) {
