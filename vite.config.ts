@@ -8,12 +8,11 @@ import { viteSingleFile } from "vite-plugin-singlefile";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// base + outDir: sitenin tamamı /akmekanik/ altında sunulacak şekilde üretilir.
-// Vercel, dist içeriğini köke koyar → site /akmekanik/* altında yayında olur.
+// base + outDir: site kökten servis edilir (alan adı doğrudan köke bağlı).
 export default defineConfig({
-  base: "/akmekanik/",
+  base: "/",
   build: {
-    outDir: "dist/akmekanik",
+    outDir: "dist",
   },
   plugins: [react(), tailwindcss(), viteSingleFile()],
   resolve: {
